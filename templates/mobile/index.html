@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="container m-5">
+    <div class="row">
+    <div class="col-3">
+        # payment section
+    </div>
+    <div class="col-5">
+        #product section
+     <div class="card shadow">
+         <img src="{{ product.image.url }}" class="img-rounded  w-75 h-75" alt="Cinque Terre" >
+         <div class="card-body">
+             <h5 class="card-title"> category :{{ product.category}}</h5>
+             <h5 class="card-title table"> name :{{ product.name}}</h5>
+             <p class="card-footer "> price : {{ product.price}}</p>
+         </div>
+         <div class="card-footer">
+             <small class="text-muted">{{ product.create }}</small>
+               {%  if product.option_status == 'color'  %}
+             <form action="" method="post">
+                 {% csrf_token %}
+                 {% for data in variant %}
+                 <input type="radio" value="{{ data.id }}"
+                        {% if var.id ==  data.id %}
+                        checked
+                        {% endif %}
+                        name="select"
+                        onchange="this.form.submit()">
+                 <a href="" style="text-decoration: none">{{ data.color_variant }} </a>
+
+                 {% endfor %}
+             </form>
+              <h3> your choice price {{ var.unit_price }} </h3>
+             {%  if product.option_status != 'None'  %}
+             <form method="POST" action="{% url  'cart:add_cart' product.id %}">
+                 {% csrf_token %}
+                 <input type="number " name="quantity" min="1" value="1" max="{{ var.amount }}">
+                 <input type="hidden" name="var_id" value="{{ var.id }}">
+                 <button type="submit">add</button>
+             </form>
+             {% else %}
+            <form method="POST" action="{% url  'cart:add_cart' product.id %}">
+                 {% csrf_token %}
+                 <input type="number " name="quantity" min="1" max="{{ var.amount }}">
+                 <button type="submit">add</button>
+             </form>
+             {% endif %}
+         </div>
+             {% endif %}}
+
+         </div>
+     </div>
+    <div class="col-4">
+             #comment section
+                    <div class="d-flex flex-column comment-section">
+                        <div class="bg-white p-2">
+                            {% for c in comment %}
+                                <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">
+                                   User : {{ c.user }}
+                                </span>
+                                    <span class="date text-black-50"> {{ c.create }}</span></div>
+
+                            <div class="mt-2">
+
+                                <p class="comment-text">{{ c.text }}   ******  rate : {{ c.rate }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="bg-white">
+                            <div class="d-flex flex-row fs-12">
+                                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                                <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2">
+                            <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                <form action="{% url 'comment:Product_comment' product.id %}" method="post">
+                                    {% csrf_token  %}
+                                    {{ comment_form }}
+
+                                    <button class="btn btn-primary " type="submit">Post comment</button>
+                                </form>
+                    </div>
+    </div>
+</div>
+{% endblock %}
+

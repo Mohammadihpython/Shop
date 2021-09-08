@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    {%  if messages %}
+        <ul class="messages">
+        {%  for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+<div class="container">
+    <div class="row">
+        <h3> order</h3>
+            <p>total price: {{ order.get_price }}</p>
+          <form action="{% url  'order:coupon' order.id %}" method="post">
+               {% csrf_token %}
+                {{form}} <br><br>
+                <button type="submit" class="btn btn-info"> coupon </button>
+          </form>
+        <a href="{% url 'order:request' order.get_price order.id  %}" class="btn btn-info"> pay </a>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+
+
+{% block section %}
+<div class="row">
+     <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card ">
+                    <form action=""  >
+                        <label for="customRange1"  class="form-label">min price:</label>
+                        <input type="range" style="border: 50px" multiple="multiple" min="0" max="999000" name="price" class="form-range" id="customRange1" >
+                        <label for= " ">color:
+                             <br>
+                           <div class="form-check" style="text-decoration: none">
+
+                               {{ filters.form.color }}
+                           </div>
+                        </label><br>
+                           <label for="">size:
+                             <br>
+                           <div class="form-check">
+                               {{ filters.form.size}}
+                           </div>
+                        </label>
+                        <button class="btn btn-outline-success">filter</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    {% for product in items %}
+                     <div class="col-md-3 col-sm-4 col-xl-3 col-lg-2">
+                         <div class="card shadow  border-5 flex-grow-1">
+                           <img src="{{ product.image.url }}" class="img-fluid w-100"  style="height: 200px; width: 50px" alt="image">
+                           <div class="card-body w-auto h-75">
+                                <h5 class="card-title"> category :{{ product.category}}</h5>
+                                 <h5 class="card-title table"> name :{{ product.name}}</h5>
+                                 <p class="card-footer "> price : {{ product.price}} تومان</p>
+                            </div>
+                            <div class="card-footer">
+                                 <small class="text-muted">{{ product.create }}</small>
+                                  <a  class="btn btn-outline-success" href="{% url 'product:product-detail'  product.id %}">info</a>
+                           </div>
+                           </div>
+                 </div>
+                {% endfor  %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

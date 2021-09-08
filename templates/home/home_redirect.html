@@ -1,0 +1,9 @@
+{%  extends 'base.html' %}
+{% block body %}
+<div class="container">
+    <div class="row center">
+        <a href="{% url 'product:product_list' %}"><button type="button" class="btn btn-outline-info me-2  bg-secondary">django and template(bootstrap)</button></a>
+        <a href="{% url 'apiItem:product' %}"><button type="button" class="btn btn-outline-info me-2 bg-secondary">django rest api</button></a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block title %}
+    {% trans "Profile" %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mb-2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="#">اسنپ فود</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown ml-3">
+                        <a class="nav-link dropdown-toggle" href="#"
+                           id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            میلاد جلالی
+                        </a>
+                        <div class="dropdown-menu"
+                             aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">پروفایل</a>
+                            <a class="dropdown-item" href="#">سفارش های من</a>
+                            <a class="dropdown-item" href="#">افزایش اعتبار</a>
+                            <a class="dropdown-item" href="#">خروج</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">اعتبار <span>100 تومان</span></a>
+                    </li>
+                    <li class="nav-item ml-3">
+                        <a class="nav-link" href="#">راهنما</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+    <div class="container-fluid" id="search_section">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="row justify-content-center">
+            <h2 class="text-light font-weight-bold ">سفارش آنلاین غذا</h2>
+        </div>
+        <div class="row justify-content-center ">
+            <h2 class="text-light font-weight-bold">از بهترین رستوران‌ها و
+                فست‌فود‌‌ها</h2>
+        </div>
+        <br>
+        <br>
+        <form action="#">
+            <div class="form-row justify-content-center">
+                <div class="col-md-2 mb-1">
+                    <input type="text" class="form-control" placeholder="شهر">
+                </div>
+                <div class="col-md-2 mb-1">
+                    <input type="text" class="form-control" placeholder="محله">
+                </div>
+                <div class="col-md-2 mb-1">
+                    <input type="text" class="form-control" placeholder="غذا">
+                </div>
+                <div class="col-md-2 mb-1">
+                    <input type="text" class="form-control" placeholder="رستوران">
+                </div>
+                <div class="col-md-2 mb-1">
+                    <input type="submit" class="form-control btn-success" placeholder="جستجو" value="جستجو">
+                </div>
+            </div>
+
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="container-fluid" id="select_section">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row justify-content-center">
+            <h2>غذا چی میل دارید؟</h2>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <div class="card food_card">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="text-light mr-3">کباب</h3>
+                    <h6 class="text-light mr-3"><span>2567 </span>رستوران فعال</h6>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="card food_card">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="text-light mr-3">برگر</h3>
+                    <h6 class="text-light mr-3"><span>2567 </span>رستوران فعال</h6>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="card food_card">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="text-light mr-3">ساندویچ</h3>
+                    <h6 class="text-light mr-3"><span>2567 </span>رستوران فعال</h6>
+                </div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <div class="card food_card">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="text-light mr-3">پیتزا</h3>
+                    <h6 class="text-light mr-3"><span>2567 </span>رستوران فعال</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
