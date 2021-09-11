@@ -4,7 +4,7 @@ This project is a simulation of Digimobile that implemented as SSR and CSR
 
 
 
-![image]()
+![image](https://github.com/Mohammadihpython/Shop-/blob/main/images/Shot%200120.png)
 ## Installing and Getting Started:
 
 1. Clone project into a directory:
@@ -80,6 +80,8 @@ python manage.py runserver
 ```
 ## Built With:
 * [Django](https://www.djangoproject.com/) - Framework used
+* [DRF]
+* [javascripts(ajax)]
 * [PostgrSQL](https://www.postgresql.org) - Used PostgrSQL database to store data
 * [Redis](https://www.redis.io) - Used to queuing tasks
 * [Celery](http://www.celeryproject.org/) - Used for asynchronous tasks
