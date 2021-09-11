@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load thumbnail %}
-
+{% load widget_tweaks %}
 
 
 {% block section %}
@@ -16,8 +16,8 @@
                         <label for= " ">color:
                              <br>
                            <div class="form-check" style="text-decoration: none">
-
-                               {{ filters.form.color }}
+                               {% render_field  filters.form.color id="filter_botton" %}
+                               {{ filters.form.color  }}
                            </div>
                         </label><br>
                            <label for="">size:

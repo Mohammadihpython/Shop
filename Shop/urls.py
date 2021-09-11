@@ -25,6 +25,7 @@ urlpatterns = [
     path('search/', include('search.urls',namespace='search',)),
     path('order/', include('order.urls',namespace='order',)),
     path('api/item/', include('product.api.urls', namespace='apiItem',)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework',)),
 
 
 ]

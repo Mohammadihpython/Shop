@@ -38,7 +38,7 @@ class Products(models.Model):
     category = models.CharField(_("code type"), choices=TYPE_CHOICE, blank=True, null=True, max_length=150)
     name = models.CharField(verbose_name=_("name"), max_length=250)
     quantity = models.PositiveIntegerField(default=0, verbose_name=_('quantity'))
-    image = models.ImageField(upload_to='static/media/mobile', verbose_name=_('image'))
+    image = models.ImageField(upload_to='static/media/mobile', verbose_name=_('image'),null=True,blank=True)
     slug = models.SlugField(unique=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_('(price'))
     published = models.DateTimeField(auto_now_add=True, verbose_name=_('create time'))
@@ -49,7 +49,7 @@ class Products(models.Model):
     description = models.TextField(max_length=10000, verbose_name=_('description'), blank=True)
     discount = models.PositiveIntegerField(blank=True, null=True)
     total_price = models.PositiveIntegerField(blank=True, null=True)
-    option_status = models.CharField(max_length=150, blank=True, null=True, choices=status)
+    option_status = models.CharField(max_length=150,default='None', blank=True, null=True, choices=status)
     likes = models.ManyToManyField(User,  blank=True, related_name='like', default=None)
     like_count = models.BigIntegerField(default='0')
 

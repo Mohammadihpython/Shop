@@ -18,6 +18,7 @@ def ProductView(request):
     item = Products.objects.order_by('-published')
     filters = ProductFilter(request.GET, queryset=item)
     item = filters.qs
+
     return render(request, 'mobile/blog.html', {'items': item, 'filters': filters})
 
 
