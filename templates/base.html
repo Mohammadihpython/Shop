@@ -3,12 +3,12 @@
 <html lang="fa">
 
 <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="{% static 'item/css/bootstrap.css' %}" type="text/css" rel="stylesheet">
-     <link href="{% static 'item/css/style.css' %}" type="text/css" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'item/css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'item/css/style.css' %}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -16,54 +16,62 @@
 
 </head>
 <body>
- <header class="p-3 bg-dark text-white">
+<header class="p-3 bg-dark text-white">
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use  xlink:href="#bootstrap"/></svg>
-        </a>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"/>
+                </svg>
+            </a>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'product:product_list' %}" class="nav-link px-2 text-secondary">Home</a></li>
-            {% if user.is_authenticated %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{% url 'product:product_list' %}" class="nav-link px-2 text-secondary">Home</a></li>
+                {% if user.is_authenticated %}
 
-            <li><a href="{% url 'cart:cart_detail' %}" class="nav-link px-2 text-white">cart</a></li>
-            <li><a href="{% url 'account:logout'  %}" class="nav-link px-2 text-white">log out</a></li>
-            <li><a href="" class="nav-link px-2 text-white">Order</a></li>
-            {% endif %}
-            <li><a href="" class="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="" class="nav-link px-2 text-white">About</a></li>
-        </ul>
+                    <li><a href="{% url 'cart:cart_detail' %}" class="nav-link px-2 text-white">cart</a></li>
+                    <li><a href="{% url 'account:logout' %}" class="nav-link px-2 text-white">log out</a></li>
+                    <li><a href="" class="nav-link px-2 text-white">Order</a></li>
+                {% endif %}
+                <li><a href="" class="nav-link px-2 text-white">FAQs</a></li>
+                <li><a href="" class="nav-link px-2 text-white">About</a></li>
+            </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" class="form-control form-control-dark" placeholder="Searc..." aria-label="Search">
-        </form>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control form-control-dark" placeholder="Searc..." aria-label="Search">
+            </form>
 
-        <div class="text-end">
-            <a href="{% url  'account:login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
-            <a href="{%  url 'account:register' %}"> <button type="button" class="btn btn-warning">Sign-up</button></a>
-            <a href="{% url 'product:product_list' %}"><button type="button" class="btn btn-outline-light me-2">django and template(bootstrap)</button></a>
-{#            <a href="{% url 'apiItem:product' %}"><button type="button" class="btn btn-outline-light me-2">django rest api</button></a>#}
+            <div class="text-end">
+                <a href="{% url  'account:login' %}">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                </a><a href="{% url 'account:register' %}">
+                <button type="button" class="btn btn-warning">Sign-up</button>
+            </a>
+                <a href="{% url 'product:product_list' %}">
+                    <button type="button" class="btn btn-outline-light me-2">django and template(bootstrap)</button>
+                </a>
+                {#            <a href="{% url 'apiItem:product' %}"><button type="button" class="btn btn-outline-light me-2">django rest api</button></a>#}
+            </div>
         </div>
-      </div>
-    </div>z
-  </header>
- <div class="container">
-     <div class="row">
-         <div class="col-xs-2 col-3">
+    </div>
+    z
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-2 col-3">
 
 
-         </div>
-     </div>
- </div>
+        </div>
+    </div>
+</div>
 {% block section %}    {% endblock %}
 {% block body %} {% endblock %}
 
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
 
 </html>
