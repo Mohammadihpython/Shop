@@ -4,7 +4,7 @@ This project is a simulation of Digimobile that implemented as SSR and CSR
 
 
 
-
+![image]()
 ## Installing and Getting Started:
 
 1. Clone project into a directory:
