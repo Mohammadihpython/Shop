@@ -11,10 +11,11 @@ class Test_Product_Model(TestCase):
     def setUp(cls):
         cls.c = Client()
         cls.factory = RequestFactory()
-        Color.objects.create(name="red")
-        variants.objects.create(name='A30', color_variant_id='1', unit_price='410000', amount='40', product_variant_id=1)
         Products.objects.create(name='A30', quantity=4, image='A30',
                                 slug="A30", price=4000, option_status="color")
+        Color.objects.create(name="red")
+
+        variants.objects.create(name='A30', color_variant_id='1', unit_price='410000', amount='40', product_variant_id=1)
 
     def test_product_content(self):
         product = Products.objects.get(id=1)

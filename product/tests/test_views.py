@@ -18,12 +18,13 @@ class TestViewResponses(TestCase):
     def setUp(self):
         self.c = Client()
         self.factory = RequestFactory()
-        User.objects.create(username='admin')
-        self.color = Color.objects.create(name="red")
-        self.size = Size.objects.create(name='xl')
-        Products.objects.create(image='A20', name="A20", quantity=5,
+        # User.objects.create(username='admin')
+        # self.color = Color.objects.create(name="red")
+        # self.size = Size.objects.create(name='xl')
+        p=Products.objects.create(image='A20', name="A20", quantity=5,
                                 price='2000',
                                 slug='A20')
+        print('p')
 
     def test_url_allowed_hosts(self):
         """
@@ -54,7 +55,7 @@ class TestViewResponses(TestCase):
         Test items response status
         """
         response = self.c.get(
-            reverse('product:product-detail', args=[1]))
+            reverse('product:product-detail', kwargs={'pk': '1'}))
         self.assertEqual(response.status_code, 200)
 
     def test_homepage_html(self):
