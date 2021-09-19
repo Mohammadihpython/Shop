@@ -100,7 +100,7 @@ class ProductDetailApi(APIView, PostUserPermission):
 class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
-    authentication_classes = JWTAuthentication
+    # authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = Products.objects.all()
     serializer_class = ProductDetailSerializer
@@ -109,7 +109,7 @@ class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
 class VariantUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
-    authentication_classes = JWTAuthentication
+    # authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = variants.objects.all()
     serializer_class = VariantDetailSerializer

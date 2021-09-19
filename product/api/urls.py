@@ -13,7 +13,7 @@ urlpatterns = [
     path('favourita/<int:id>/', FavouriteAddDell.as_view(), name='favourite_add'),
     path('like/<int:id>/', LikeAddDell.as_view(), name='like_add'),
     path('update/<int:id>/', ProductUpdateDestroyApi.as_view(), name='product_update'),
-    path('varupdate/<int:id>/', VariantUpdateDestroyApi.as_view(), name='product_update'),
+    path('varupdate/<int:id>/', VariantUpdateDestroyApi.as_view(), name='variant_update'),
 
 ]
 # app_name = 'apiItem'
