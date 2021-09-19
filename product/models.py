@@ -64,8 +64,12 @@ class Products(models.Model):
     def get_absolute_url(self):
         return reverse('product:product_detail', args=[self.id])
 
+    def like_username(self):
+        return "-".join(like.username for like in self.likes.all())
+
     def favourite_username(self):
         return '*'.join(favourite.username for favourite in self.favourites.all())
+
     def __str__(self):
         return self.name
 

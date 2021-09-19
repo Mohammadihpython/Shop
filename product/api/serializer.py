@@ -15,12 +15,24 @@ class SizeSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
+class attrProductSerializer(serializers.ModelSerializer):
+    favourites = serializers.CharField(source='favourite_username')
+    likes = serializers.CharField(source='like_username')
+
+    class Meta:
+        model = Products
+        fields = ('id', 'favourites', 'likes', 'like_count',)
+
+
 class VariantDetailSerializer(serializers.ModelSerializer):
+    product_variant = attrProductSerializer(many=False, read_only=True)
+
     class Meta:
         model = variants
+
         fields = (
             'id', 'name', 'product_variant', 'color_variant', 'size_variant', 'unit_price', 'discount'
-            , 'amount', 'total_price'
+            , 'amount', 'total_price',
         )
 
 
@@ -28,13 +40,14 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     size = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()
     favourites = serializers.CharField(source='favourite_username', read_only=True)
+    attr = attrProductSerializer(many=False, read_only=True)
 
     class Meta:
         model = Products
         fields = (
             'id', 'category', 'name', 'quantity', 'image', 'price', 'published', 'available', 'color', 'size',
             'description'
-            , 'discount', 'total_price', 'option_status', 'likes', 'favourites', )
+            , 'discount', 'total_price', 'option_status', 'likes', 'favourites', 'attr',)
 
     def get_color(self, obj):
         return ColorSerializer(instance=obj.color.all(), many=True).data
@@ -50,3 +63,4 @@ class ProductListSerializer(serializers.ModelSerializer):
             'id', 'category', 'name', 'quantity', 'image', 'price', 'published', 'available',
             'description'
             , 'discount', 'total_price', 'option_status',)
+
