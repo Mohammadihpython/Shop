@@ -8,6 +8,10 @@ from product.manager import MobileManager
 User = get_user_model()
 
 
+def upload_to(instance, filename):
+    return 'product/{}'.format(filename)
+
+
 class Color(models.Model):
     name = models.CharField(verbose_name=_('color'), blank=True, null=True, max_length=160)
 
@@ -38,7 +42,7 @@ class Products(models.Model):
     category = models.CharField(_("code type"), choices=TYPE_CHOICE, blank=True, null=True, max_length=150)
     name = models.CharField(verbose_name=_("name"), max_length=250)
     quantity = models.PositiveIntegerField(default=0, verbose_name=_('quantity'))
-    image = models.ImageField(upload_to='static/media/mobile', verbose_name=_('image'), null=True, blank=True)
+    image = models.ImageField(upload_to=upload_to, verbose_name=_('image'), null=True, blank=True,default='products/default.png')
     slug = models.SlugField(unique=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_('(price'))
     published = models.DateTimeField(auto_now_add=True, verbose_name=_('create time'))

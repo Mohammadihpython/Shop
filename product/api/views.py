@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404
@@ -10,6 +11,7 @@ from rest_framework.permissions import \
     DjangoModelPermissionsOrAnonReadOnly, \
     SAFE_METHODS, IsAuthenticated
 from rest_framework import filters
+from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from product.models import Products, variants, Size, Color
@@ -99,7 +101,9 @@ class ProductDetailApi(APIView, PostUserPermission):
 
 class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
+
     lookup_url_kwarg = 'id'
+    parser_classes = [MultiPartParser, FormParser]
     # authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = Products.objects.all()
@@ -109,6 +113,7 @@ class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
 class VariantUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
+    parser_classes = [MultiPartParser,FormParser]
     # authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = variants.objects.all()
