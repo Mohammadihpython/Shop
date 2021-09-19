@@ -1,19 +1,21 @@
-import rest_framework_simplejwt
 from django.conf import settings
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import GenericAPIView
 from rest_framework import generics, status, mixins
 
 from rest_framework.response import Response
-from django.core.cache import cache
 from rest_framework.views import APIView
+from rest_framework.permissions import \
+    BasePermission, \
+    DjangoModelPermissionsOrAnonReadOnly, \
+    SAFE_METHODS, IsAuthenticated
+from rest_framework import filters
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from product.models import Products, variants, Size, Color
 from .serializer import ProductListSerializer, ProductDetailSerializer, VariantDetailSerializer
-from rest_framework.permissions import BasePermission, DjangoModelPermissionsOrAnonReadOnly, SAFE_METHODS
-
 from .paginations import ProductListPagination
-from rest_framework import filters
+
 import redis
 
 # Connect to our Redis instance
@@ -56,6 +58,7 @@ class ProductList(generics.ListAPIView):
     permission_class = [DjangoModelPermissionsOrAnonReadOnly]
     pagination_class = ProductListPagination
 
+
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     if Products.option_status == 'None':
         queryset = Products.objects.all()
@@ -97,7 +100,8 @@ class ProductDetailApi(APIView, PostUserPermission):
 class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
-
+    authentication_classes = JWTAuthentication
+    permission_classes = (IsAuthenticated,)
     queryset = Products.objects.all()
     serializer_class = ProductDetailSerializer
 
@@ -105,6 +109,43 @@ class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
 class VariantUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
+    authentication_classes = JWTAuthentication
+    permission_classes = (IsAuthenticated,)
     queryset = variants.objects.all()
     serializer_class = VariantDetailSerializer
 
+
+class FavouriteAddDell(generics.GenericAPIView):
+    bad_request_message = " An error has occurred"
+    # authentication_classes = JWTAuthentication
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+
+    def post(self, request, id, *args, **kwargs):
+        product = get_object_or_404(Products, id=id)
+        if request.user not in product.favourites.all():
+            product.favourites.add(request.user.id)
+            return Response({'detail': 'Add to favourites'})
+        else:
+            product.favourites.remove(request.user.id)
+            return Response({'detail': 'remove to favourites'})
+
+
+class LikeAddDell(generics.GenericAPIView):
+    bad_request_message = " An error has occurred"
+    # authentication_classes = JWTAuthentication
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
+
+    def post(self, request, id, *args, **kwargs):
+        product = get_object_or_404(Products, id=id)
+        if request.user not in product.likes.all():
+            product.likes.add(request.user.id)
+            product.like_count += 1
+            product.save()
+            return Response({'detail': 'like it '})
+        else:
+            product.likes.remove(request.user.id)
+            product.like_count -= 1
+            product.save()
+            return Response({'detail': 'dislike'})
