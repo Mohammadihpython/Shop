@@ -28,9 +28,16 @@ class LoginSerializer(serializers.ModelSerializer):
         token = jwt.encode(payload, settings.SECRET_KEY)
         return token
 
-    def validate_email(self, value: object) -> object:
-        if User.objects.filter(email=value).exists():
-            return value
+    def validate(self, data: object) -> object:
+        email = data.get('email')
+        password = data.get('password')
+        if User.objects.filter(email=email).exists():
+            if User.check_password(password):
+
+                return data
+            else:
+                return serializers.ValidationError('password is wrong')
+
         return serializers.ValidationError('this email is not exist')
 
 
@@ -54,10 +61,13 @@ class SignUpSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        user =User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data)
+
         return user
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    pass
 
 
 class ChangePasswordSerializer(serializers.Serializer):

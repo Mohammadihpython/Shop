@@ -60,15 +60,6 @@ class ProductList(generics.ListAPIView):
     pagination_class = ProductListPagination
 
 
-class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
-    if Products.option_status == 'None':
-        queryset = Products.objects.all()
-        serializer_class = ProductDetailSerializer
-    else:
-        queryset = variants.objects.all()
-        serializer_class = VariantDetailSerializer
-
-
 class ProductDetailApi(APIView, PostUserPermission):
     lookup_field = 'id'
     print(lookup_field)
@@ -79,23 +70,12 @@ class ProductDetailApi(APIView, PostUserPermission):
     def get(self, request, id, *args, **kwargs):
         product = Products.objects.get(id=id)
         print(product)
-        if product.option_status == 'None':
-            print(True)
-            try:
-                queryset = Products.objects.filter(id=id)
-                serializer = ProductDetailSerializer(instance=queryset, many=True).data
-                return Response({'product': serializer, })
-            except Products.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-
-        else:
-            print(False)
-            try:
-                queryset = variants.objects.filter(product_variant_id=id)
-                serializer = VariantDetailSerializer(instance=queryset, many=True).data
-                return Response({'product': serializer, })
-            except variants.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+        try:
+            queryset = Products.objects.get(id=id)
+            serializer = ProductDetailSerializer(instance=queryset, ).data
+            return Response({'product': serializer, })
+        except Products.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
@@ -103,7 +83,7 @@ class ProductUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
 
     lookup_url_kwarg = 'id'
     parser_classes = [MultiPartParser, FormParser]
-    # authentication_classes = JWTAuthentication
+    authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = Products.objects.all()
     serializer_class = ProductDetailSerializer
@@ -113,7 +93,7 @@ class VariantUpdateDestroyApi(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
     parser_classes = [MultiPartParser, FormParser]
-    # authentication_classes = JWTAuthentication
+    authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     queryset = variants.objects.all()
     serializer_class = VariantDetailSerializer
@@ -157,7 +137,7 @@ class FavouriteAddDell(APIView):
 
 class LikeAddDell(APIView):
     bad_request_message = " An error has occurred"
-    # authentication_classes = JWTAuthentication
+    authentication_classes = JWTAuthentication
     permission_classes = (IsAuthenticated,)
     lookup_field = 'id'
 
