@@ -20,7 +20,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'password', 'token',
+            'email', 'password','username', 'token',
         )
 
     def get_token(self, obj):
@@ -47,7 +47,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'password', 'phone_number', 'token'
+            'email','username', 'password', 'phone_number', 'token'
         )
 
     def get_token(self, obj):

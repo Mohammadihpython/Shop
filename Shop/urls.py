@@ -23,25 +23,25 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('user/', include('account.urls', )),
-    path('cart/', include('cart.urls', namespace='cart',)),
+    path('account/', include('account.urls', namespace='account')),
+    path('cart/', include('cart.urls', namespace='cart', )),
+    path('api/cart/', include('cart.api.urls', namespace='apiCart', )),
     path('', include('product.urls', namespace='product', )),
-    path('comment/', include('comment.urls', namespace='comment',)),
-    path('search/', include('search.urls',namespace='search',)),
-    path('order/', include('order.urls',namespace='order',)),
-
+    path('comment/', include('comment.urls', namespace='comment', )),
+    path('search/', include('search.urls', namespace='search', )),
+    path('order/', include('order.urls', namespace='order', )),
+    path('api/account/', include('account.api.urls', namespace='apiAccount', )),
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/item/', include('product.api.urls', namespace='apiItem',)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework',)),
-    path('docs/',include_docs_urls(title="HamedShop")),
+    path('api/item/', include('product.api.urls', namespace='apiItem', )),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework', )),
+    path('docs/', include_docs_urls(title="HamedShop")),
     path('openapi', get_schema_view(
         title="HamedShop",
-        description= "api for shop and product",
+        description="api for shop and product",
         version="1.0.0",
-    ),name='openapi-schema'
-    ),
-
+    ), name='openapi-schema'
+         ),
 
 ]

@@ -63,13 +63,13 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         product = Products(**validated_data)
         Products.objects.create(**validated_data)
-        # product.save()
+        product.save()
         for variant in validated_data['product_variant']:
             variant['product_variant_id'] = product.id
             new_variant = VariantDetailSerializer(data=variant)
             if new_variant.is_valid:
                 variants.objects.create(**validated_data)
-                # new_variant.save()
+                new_variant.save()
             else:
                 product.delete()
                 raise serializers.ValidationError(

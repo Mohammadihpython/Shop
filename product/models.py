@@ -42,7 +42,8 @@ class Products(models.Model):
     category = models.CharField(_("code type"), choices=TYPE_CHOICE, blank=True, null=True, max_length=150)
     name = models.CharField(verbose_name=_("name"), max_length=250)
     quantity = models.PositiveIntegerField(default=0, verbose_name=_('quantity'))
-    image = models.ImageField(upload_to=upload_to, verbose_name=_('image'), null=True, blank=True,default='products/default.png')
+    image = models.ImageField(upload_to=upload_to, verbose_name=_('image'), null=True, blank=True,
+                              default='products/default.png')
     slug = models.SlugField(unique=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_('(price'))
     published = models.DateTimeField(auto_now_add=True, verbose_name=_('create time'))
@@ -100,7 +101,8 @@ class variants(models.Model):
     total_price = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        name = [str(self.name), str(self.color_variant), str(self.size_variant)]
+        return '_'.join(name)
 
     @property
     def total_price(self):

@@ -12,7 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model, login, logout
 
 
-@api_view('POST')
+@api_view(('POST',))
 def logout_api_view(request):
     try:
         refresh_token = request.data['refresh']
@@ -44,7 +44,6 @@ class LoginApiView(generics.GenericAPIView):
             user = self.get_object()
             serializer = self.get_serializer(data=user, partial=True)
             if serializer.is_valid():
-                login(self.request, )
                 return Response(status=status.HTTP_200_OK, data='login successful')
 
             return Response(status=status.HTTP_403_FORBIDDEN, data='login unsuccessful')

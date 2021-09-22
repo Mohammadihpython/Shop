@@ -11,7 +11,7 @@ from django.utils import timezone
 User = get_user_model()
 
 
-@shared_task(name='Send email verification link')
+@shared_task(name='send_remember_password_code')
 def send_remember_password_code(email, code):
     print('*' * 5, 'code is: ', code, '*' * 5)
     send_mail(

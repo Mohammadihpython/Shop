@@ -139,7 +139,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "account.User"
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
@@ -149,8 +149,8 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Celery configs:
-CELERY_BROKER_URL = 'redis://localhost:6379/10'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/10'
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Tehran'
@@ -160,8 +160,8 @@ CELERY_ENABLE_UTC = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
-# EMAIL_HOST_USER = local_config.HOST_USER
-# MAIL_HOST_PASSWORD = local_config.HOST_PASSWORD
+EMAIL_HOST_USER = 'mohammadih87@yahoo.com'
+MAIL_HOST_PASSWORD = 'Hmah8013'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
@@ -169,19 +169,19 @@ EMAIL_USE_SSL = False
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # redis setting for cash objects
 REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-
+REDIS_PORT = 6379 / 10
 
 # redis for cash page or view
 if DEBUG:
