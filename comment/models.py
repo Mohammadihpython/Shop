@@ -19,7 +19,8 @@ class Comment(models.Model):
     is_reply = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.product.name
+        name = [str(self.user), str(self.product)]
+        return '__'.join(name)
 
 
 class CommentForm(ModelForm):
@@ -31,4 +32,4 @@ class CommentForm(ModelForm):
 class ReplyForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['comment']
+        fields = ['text',]

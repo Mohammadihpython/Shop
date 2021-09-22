@@ -10,9 +10,16 @@ class CommentSerializer(serializers.ModelSerializer):
             'product',
             'text',
             'rate',
-            'reply',
-            'create',
-            'is_reply'
         )
 
 
+class ReplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = (
+            'user',
+            'product',
+            'text',
+            'rate',
+            'reply',
+        )

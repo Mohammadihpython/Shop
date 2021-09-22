@@ -7,4 +7,4 @@ from .models import Comment
 
 @register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['text','rate','reply','create','is_reply']
+    list_display = ['id','text','rate','reply','create','is_reply']
