@@ -24,12 +24,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
     path('account/', include('account.urls', namespace='account')),
+
     path('cart/', include('cart.urls', namespace='cart', )),
     path('api/cart/', include('cart.api.urls', namespace='apiCart', )),
+
     path('', include('product.urls', namespace='product', )),
+
     path('comment/', include('comment.urls', namespace='comment', )),
+    path('api/comment/', include('comment.api.urls', namespace='apiComment', )),
+
     path('search/', include('search.urls', namespace='search', )),
+
     path('order/', include('order.urls', namespace='order', )),
+    path('api/order/', include('order.api.urls', namespace='apiOrder', )),
+
     path('api/account/', include('account.api.urls', namespace='apiAccount', )),
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

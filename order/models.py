@@ -29,9 +29,9 @@ class Order(models.Model):
 
 class ItemOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_item')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, )
-    variant = models.ForeignKey(variants, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', )
+    product = models.ForeignKey(Products, on_delete=models.CASCADE,verbose_name='product' )
+    variant = models.ForeignKey(variants, on_delete=models.CASCADE, null=True, blank=True,verbose_name='variant')
     quantity = models.IntegerField()
 
     def __str__(self):

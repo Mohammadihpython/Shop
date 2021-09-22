@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 class ADDCartApiView(generics.GenericAPIView):
     serializer_class = CartSerializer
     queryset = Cart.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -40,7 +40,7 @@ class ADDCartApiView(generics.GenericAPIView):
 class CartDelApiView(generics.GenericAPIView):
     serializer_class = CartDelSerializer
     queryset = Cart.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -65,7 +65,7 @@ class CartDelApiView(generics.GenericAPIView):
 
 
 class CartListApiView(generics.ListAPIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Cart.objects.all()
 
     def get(self, request, *args, **kwarg):

@@ -26,3 +26,9 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['text', 'rate']
+
+
+class ReplyForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
