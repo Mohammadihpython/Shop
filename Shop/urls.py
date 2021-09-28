@@ -16,11 +16,14 @@ Including another URLconf
 import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns
+
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-urlpatterns = [
+
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
     path('account/', include('account.urls', namespace='account')),
@@ -52,4 +55,4 @@ urlpatterns = [
     ), name='openapi-schema'
          ),
 
-]
+)

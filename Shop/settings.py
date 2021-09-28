@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
-
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from coverage.env import TESTING
 
@@ -37,25 +38,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # local app
     "account.apps.AccountConfig",
-    'crispy_forms',
     'product.apps.ProductConfig',
     'search.apps.SearchConfig',
-    'sorl.thumbnail',
     'django.contrib.postgres',
     'comment.apps.CommentConfig',
     'cart.apps.CartConfig',
     'order.apps.OrderConfig',
+
+    # Third party
     'rest_framework',
     'rest_framework_simplejwt',
     'widget_tweaks',
-
+    'crispy_forms',
+    'sorl.thumbnail',
     'debug_toolbar',
 
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,6 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+LANGUAGES = (
+    ('en-us', _('English')),
+    ('fa-IR', _('Farsi')),
+)
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -132,7 +141,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -213,3 +222,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30 * 60 * 60 * 24),
+}
