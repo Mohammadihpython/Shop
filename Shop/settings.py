@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'comment.apps.CommentConfig',
     'cart.apps.CartConfig',
     'order.apps.OrderConfig',
+    'graph',
 
     # Third party
     'rest_framework',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sorl.thumbnail',
     'debug_toolbar',
+    'graphene_django',
 
 ]
 MIDDLEWARE = [
