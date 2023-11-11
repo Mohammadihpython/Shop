@@ -12,7 +12,7 @@ services:
     container_name: postgres
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=Hmah8013
+      - POSTGRES_PASSWORD=password
       - POSTGRES_USER=hamed
       - POSTGRES_DB=shop
     networks:

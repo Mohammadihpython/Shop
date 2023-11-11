@@ -44,7 +44,7 @@ def coupon_order(request, order_id):
         try:
             coupon = Coupon.objects.get(code__iexact=code, start__lte=time, end__gte=time, active=True)
         except Coupon.DoesNotExist:
-            messages.error(request, 'the code expire or wrong', messages.error)
+            messages.error(request, 'the code expire or wrong', f"{messages.error}")
             return redirect('order:order_detail', order_id)
         order = Order.objects.get(id=order_id)
         order.discount = coupon.discount
@@ -83,10 +83,9 @@ def send_request(request, price, order_id):
     authority = req.json()['data']['authority']
     if len(req.json()['errors']) == 0:
         return redirect(ZP_API_STARTPAY.format(authority=authority))
-    else:
-        e_code = req.json()['errors']['code']
-        e_message = req.json()['errors']['message']
-        return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+    e_code = req.json()['errors']['code']
+    e_message = req.json()['errors']['message']
+    return HttpResponse(kwargs=f"Error code: {e_code}, Error Message: {e_message}")
 
 
 def verify(request, price, order_id):
@@ -94,47 +93,45 @@ def verify(request, price, order_id):
     amount = price
     t_status = request.GET.get('Status')
     t_authority = request.GET['Authority']
-    if request.GET.get('Status') == 'OK':
-        # add custom things like paid true ...
-        order = Order.objects.get(id=order_id)
-        order.paid = True
-        order.save()
-        cart = ItemOrder.objects.filter(order_id=order_id)
-        for c in cart:
-            if c.product.option_status == 'None':
-                product = Products.objects.get(c.product.id)
-                product.quantity -= c.quantity
-                product.save()
-            else:
-                variant = variants.objects.get(c.variant.id)
-                variant.amount -= c.quantity
-                variant.save()
-    # end custom section
-        req_header = {"accept": "application/json",
-                      "content-type": "application/json'"}
-        req_data = {
-            "merchant_id": MERCHANT,
-            "amount": amount,
-            "authority": t_authority
-        }
-        req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
-        if len(req.json()['errors']) == 0:
-            t_status = req.json()['data']['code']
-            if t_status == 100:
-                return HttpResponse('Transaction success.\nRefID: ' + str(
-                    req.json()['data']['ref_id']
-                ))
-            elif t_status == 101:
-                return HttpResponse('Transaction submitted : ' + str(
-                    req.json()['data']['message']
-                ))
-            else:
-                return HttpResponse('Transaction failed.\nStatus: ' + str(
-                    req.json()['data']['message']
-                ))
+    if request.GET.get('Status') != 'OK':
+        return HttpResponse(kwargs="Transaction failed or canceled by user")
+    # add custom things like paid true ...
+    order = Order.objects.get(id=order_id)
+    order.paid = True
+    order.save()
+    cart = ItemOrder.objects.filter(order_id=order_id)
+    for c in cart:
+        if c.product.option_status == 'None':
+            product = Products.objects.get(c.product.id)
+            product.quantity -= c.quantity
+            product.save()
         else:
-            e_code = req.json()['errors']['code']
-            e_message = req.json()['errors']['message']
-            return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+            variant = variants.objects.get(c.variant.id)
+            variant.amount -= c.quantity
+            variant.save()
+    # end custom section
+    req_header = {"accept": "application/json",
+                  "content-type": "application/json'"}
+    req_data = {
+        "merchant_id": MERCHANT,
+        "amount": amount,
+        "authority": t_authority
+    }
+    req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
+    if len(req.json()['errors']) == 0:
+        t_status = req.json()['data']['code']
+        if t_status == 100:
+            res= str(req.json()['data']['ref_id'])
+            return HttpResponse(kwargs={"Transaction Success": res})
+        elif t_status == 101:
+            return HttpResponse(kwargs='Transaction submitted : ' + str(
+                req.json()['data']['message']
+            ))
+        else:
+            return HttpResponse(kwargs='Transaction failed.\nStatus: ' + str(
+                req.json()['data']['message']
+            ))
     else:
-        return HttpResponse('Transaction failed or canceled by user')
+        e_code = req.json()['errors']['code']
+        e_message = req.json()['errors']['message']
+        return HttpResponse(kwargs=f"Error code: {e_code}, Error Message: {e_message}")

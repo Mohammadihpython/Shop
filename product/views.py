@@ -27,22 +27,23 @@ def ProductDetailView(request, pk):
     comment_form = CommentForm()
     comment = Comment.objects.filter(product_id=pk)
     cart_form = CartForm()
-    if Products.option_status != 'None':
-        if request.method == 'POST':
-            variant = variants.objects.filter(product_variant_id=pk)
-            var_id = request.POST.get('select')
-            var = variants.objects.get(id=var_id)
-        else:
-            if request.method == 'GET':
-                variant = variants.objects.filter(product_variant_id=pk)
-                var = variants.objects.get(id=variant[0].id)
-
-        args = {'product': product, 'var': var, 'variant': variant, 'comment_form': comment_form,
-                'comment': comment, 'cart_form': cart_form}
-        return render(request, 'mobile/blog_detail.html', args)
-    else:
+    if Products.option_status == 'None':
         return render(request, 'mobile/blog_detail.html', {'product': product, 'comment_form': comment_form,
-                                                           'comment': comment, 'cart_form': cart_form})
+                                                          'comment': comment, 'cart_form': cart_form})
+    var_id = None
+    var = None
+    variant =None
+    if request.method == 'POST':
+        variant = variants.objects.filter(product_variant_id=pk)
+        var_id = request.POST.get('select')
+        var = variants.objects.get(id=var_id)
+    elif request.method == 'GET':
+        variant = variants.objects.filter(product_variant_id=pk)
+        var = variants.objects.get(id=variant[0].id)
+
+    args = {'product': product, 'var': var, 'variant': variant, 'comment_form': comment_form,
+            'comment': comment, 'cart_form': cart_form}
+    return render(request, 'mobile/blog_detail.html', args)
 
 
 

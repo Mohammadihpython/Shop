@@ -11,12 +11,12 @@ from order.models import OrderForm
 def CartView(request):
     cart = Cart.objects.filter(user_id=request.user.id)
     order_form = OrderForm()
-    total = 0
-    for p in cart:
-        if p.product.option_status != 'None':
-            total += p.variant.unit_price
-        else:
-            total += p.product.price * p.product.discount / 100 * p.quantity
+    total = sum(
+        p.variant.unit_price
+        if p.product.option_status != 'None'
+        else p.product.price * p.product.discount / 100 * p.quantity # type: ignore
+        for p in cart
+    )
     return render(request, 'mobile/cart.html', {'cart': cart, 'total': total , 'order_form': order_form})
 
 
@@ -28,17 +28,9 @@ def Add_Cart(request, id):
     if product.option_status != 'None':
         var_id = request.POST.get('var_id')
         data = Cart.objects.filter(user_id=request.user.id, variant_id=var_id)
-        if data:
-            check = 'yes'
-        else:
-            check = 'no'
     else:
         data = Cart.objects.filter(user_id=request.user.id, product_id=id)
-        if data:
-            check = 'yes'
-        else:
-            check = 'no'
-
+    check = 'yes' if data else 'no'
     if request.method == 'POST':
         form = CartForm(request.POST)
         var_id = request.POST.get('var_id')

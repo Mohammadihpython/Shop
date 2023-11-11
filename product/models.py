@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 def upload_to(instance, filename):
-    return 'product/{}'.format(filename)
+    return f'product/{filename}'
 
 
 class Color(models.Model):
@@ -80,14 +80,11 @@ class Products(models.Model):
 
     @property
     def total_price(self):
-        if self.discount:
-            total = (self.discount * self.price) / 100
-            print(total)
-            return int(self.price - total)
-
-        elif not self.discount:
+        if not self.discount:
             return int(self.price)
-        return self.total_price
+        total = (self.discount * self.price) / 100
+        print(total)
+        return int(self.price - total)
 
 
 class variants(models.Model):
@@ -106,11 +103,9 @@ class variants(models.Model):
 
     @property
     def total_price(self):
-        if self.discount:
-            total = (self.discount * self.unit_price) / 100
-            print(total)
-            return int(self.unit_price - total)
-        elif not self.discount:
+        if not self.discount:
             return int(self.unit_price)
 
-        return self.total_price
+        total = (self.discount * self.unit_price) / 100
+        print(total)
+        return int(self.unit_price - total)

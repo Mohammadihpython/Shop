@@ -25,22 +25,20 @@ User = get_user_model()
 
 @login_required
 def like(request):
-    if request.POST.get('action') == 'post':
-        result = ''
-        id = int(request.POST.get('postid'))
-        post = get_object_or_404(Products, id=id)
-        if post.likes.filter(id=request.user.id).exists():
-            post.likes.remove(request.user)
-            post.like_count -= 1
-            result = post.like_count
-            post.save()
-        else:
-            post.likes.add(request.user)
-            post.like_count += 1
-            result = post.like_count
-            post.save()
-
-        return JsonResponse({'result': result, })
+    if request.POST.get('action') != 'post':
+        return
+    post_id = int(request.POST.get('postid'))
+    post = get_object_or_404(Products, id=post_id)
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        post.like_count -= 1
+    else:
+        post.likes.add(request.user)
+        post.like_count += 1
+    result = ''
+    result = post.like_count
+    post.save()
+    return JsonResponse({'result': result, })
 
 
 # Create your views here.
@@ -70,16 +68,6 @@ class LoginView(FormView):
 
     def get_success_url(self):
         return reverse_lazy('product:product_list')
-
-
-# class LoginWithEmailView(FormView):
-# form_class = LoginWithEmail
-# template_name = 'account/Login.html'
-# success_url = 'mobile/shop.html'
-
-# $def form_valid(self, form):
-#  login(self.request, form.cleaned_data['user'])
-# return super().form_valid(form)
 
 
 class RememberEmailPasswordView(FormView):

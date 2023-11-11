@@ -22,12 +22,12 @@ class OrderCreateApiView(generics.GenericAPIView):
             address = serializer.data.get('address')
             cart = Cart.objects.filter(user_id=user.id)
             try:
-                total_price = 0
-                for c in cart:
-                    if c.product.option_status == 'None':
-                        total_price += c.product.total_price
-                    else:
-                        total_price += c.variant.total_price
+                total_price = sum(
+                    c.product.total_price
+                    if c.product.option_status == 'None'
+                    else c.variant.total_price
+                    for c in cart
+                )
                 order = Order.objects.create(
                     user_id=user.id,
                     discount=discount,
@@ -43,10 +43,10 @@ class OrderCreateApiView(generics.GenericAPIView):
                         user_id=user.id,
                         product_id=c.product.id,
                         variant_id=c.variant.id,
-                        quantity=cart.quantity
+                        quantity=cart.quantity # type: ignore
                     )
 
-                return Response({'msg': 'order create', }, status=status.HTTP_201_CREATED)
+                return Response({'data': 'order create','total price':total_price }, status=status.HTTP_201_CREATED)
 
             except Cart.DoesNotExist:
                 return Response('Cart is empty', status=status.HTTP_404_NOT_FOUND)
@@ -59,8 +59,7 @@ class OrderListDestroyApiView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = ItemOrder.objects.filter(user_id=user.id)
-        return queryset
+        return ItemOrder.objects.filter(user_id=user.id)
 
 
 class OrderDeleteApiView(generics.RetrieveDestroyAPIView):
@@ -70,5 +69,4 @@ class OrderDeleteApiView(generics.RetrieveDestroyAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Order.objects.filter(user_id=user.id)
-        return queryset
+        return Order.objects.filter(user_id=user.id)
