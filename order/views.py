@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.http import require_POST
-from suds import client
 from cart.models import *
 from order.forms import CouponForm
 from .models import *
